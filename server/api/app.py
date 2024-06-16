@@ -3,9 +3,9 @@ from google_search_service import GoogleSearchService
 from credibility_calculator import calculate_credibility
 from embedding_service import Embedder
 from flask import Flask, request, jsonify
-
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/api/text", methods=["POST"])
 def verify_news():
