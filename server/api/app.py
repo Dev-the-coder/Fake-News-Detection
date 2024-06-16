@@ -2,10 +2,10 @@ from llama_connect_service import LlamaConnectService
 from google_search_service import GoogleSearchService
 from credibility_calculator import calculate_credibility
 from embedding_service import Embedder
-from flask import Flask, request, jsonify
-
+from flask import Flask, request, jsonify # type: ignore
+from flask_cors import CORS # type: ignore
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/api/text", methods=["POST"])
 def verify_news():

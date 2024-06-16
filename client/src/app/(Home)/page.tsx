@@ -11,7 +11,7 @@ const Home = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/api/news', { news: text });
+      const response = await axios.post('http://127.0.0.1:5000/api/text', { news: text });
       console.log('API Response:', response.data);
     } catch (error) {
       console.error('API Error:', error);
