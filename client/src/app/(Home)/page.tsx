@@ -1,52 +1,54 @@
 "use client"
 import { useState } from 'react';
+import axios from 'axios';
 
-const Page = () => {
-  const [activeTab, setActiveTab] = useState<'Link' | 'Text' | null>(null);
+const Home = () => {
+  const [text, setText] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/api/text', { news: text });
+      console.log('API Response:', response.data);
+    } catch (error) {
+      console.error('API Error:', error);
+    }
+  };
 
   return (
-
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-        <h1 className='flex justify-center item-center font-bold font-sans text-blue-400 '>Fake News Detection</h1>
-
-      <div className="flex space-x-4 mb-4">
-        <button
-          className={`px-4 py-2 ${activeTab === 'Link' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('Link')}
-        >
-          Link
-        </button>
-        <button
-          className={`px-4 py-2 ${activeTab === 'Text' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('Text')}
-        >
-          Font
-        </button>
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-blue-500 text-white text-center py-4">
+        <h1 className="text-2xl font-bold">Fake News Detector</h1>
+      </header>
+      <div className="flex-grow flex flex-col justify-end p-4">
+        <div className="w-full max-w-xl mx-auto flex items-center space-x-2">
+          <textarea
+            className="flex-grow p-3 border border-gray-300 rounded-lg resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows={1}
+            placeholder="Enter text here..."
+            value={text}
+            onChange={handleChange}
+            style={{ height: 'auto' }}
+            onInput={(e) => {
+              e.currentTarget.style.height = 'auto';
+              e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+            }}
+          />
+          <button
+            className="bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600 flex-shrink-0"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </div>
-
-      {activeTab === 'Link' && (
-        <div className="flex flex-col items-center">
-          <input
-            type="text"
-            placeholder="Paste your link"
-            className="mb-2 p-2 border border-gray-300 rounded"
-          />
-          <button className="px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
-        </div>
-      )}
-
-      {activeTab === 'Text' && (
-        <div className="flex flex-col items-center">
-          <input
-            type="text"
-            placeholder="Paste your Text"
-            className="mb-2 p-2 border border-gray-300 rounded"
-          />
-          <button className="px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
-        </div>
-      )}
     </div>
   );
 };
 
-export default Page;
+export default Home;
+
+
