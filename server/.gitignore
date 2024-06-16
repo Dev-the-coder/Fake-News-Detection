@@ -1,0 +1,5 @@
+.env
+news-vrfr-llama/
+__pycache__/
+search_results.json
+service-output.json
