@@ -4,6 +4,7 @@ from embedding_service import Embedder
 from dotenv import load_dotenv
 import os
 import re
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -12,6 +13,13 @@ class GoogleSearchService:
     def __init__(self):
         self.serpapi_key = os.getenv("SERPAPI_KEY")
 
+    def generate_datestring(self):
+        today = datetime.today()
+        last_year = today - timedelta(days=365)
+        today_str = today.strftime("%m/%d/%Y")
+        last_year_str = last_year.strftime("%m/%d/%Y")
+        return f"cdr:1,cd_min:{last_year_str},cd_max:{today_str}"
+
     def search_google(self, news_content):
         lcs = LlamaConnectService()
         article_summarised = lcs.summarise_article(news_content)
@@ -19,6 +27,8 @@ class GoogleSearchService:
         params = {
             "q": search_query,
             "engine": "google",
+            "tbm": "nws",
+            "tbs": self.generate_datestring(),
             "api_key": self.serpapi_key,
         }
         search = GoogleSearch(params)
