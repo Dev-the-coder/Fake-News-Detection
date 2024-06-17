@@ -15,6 +15,7 @@ const Home = () => {
       setLoading(true); 
       try {
         const response = await axios.post('http://127.0.0.1:5000/api/text', { news: newsText });
+        console.log(response.data)
         setAnalysisHistory([...analysisHistory, {...response.data, "userText": newsText}]);
       } catch (error) {
         console.error('API Error:', error);
@@ -27,12 +28,12 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-800 text-white">
       <header className="bg-blue-800 fixed top-0 left-0 right-0 text-white py-6 shadow-lg pl-20 font-sf z-50">
-        <h1 className="text-3xl font-extrabold">Fake News Detector</h1>
+        <h1 className="text-2xl font-extrabold">Fake News Detector</h1>
       </header>
       <div style={{height: "10vh"}}></div>
       <div className="flex-grow overflow-y-auto p-4 font-sans z-10"> 
         {analysisHistory.map((news, index) => (
-          <AnalysisComponent key={index} news={news} />
+          <AnalysisComponent key={index} news={news}  loading ={loading}/>
         ))}
       </div>
       <div style={{height: "10vh"}}></div>
