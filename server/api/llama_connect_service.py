@@ -54,7 +54,6 @@ class LlamaConnectService:
         return "".join([chunk.choices[0].delta.content or "" for chunk in completion])
 
     def contradiction(self, news_content, verdict):
-        print(verdict)
         completion = self.client.chat.completions.create(
             model="llama3-70b-8192",
             messages=[

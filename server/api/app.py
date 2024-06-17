@@ -30,12 +30,12 @@ def verify_news():
     credibility, llm_ans, _, _ = calculate_credibility(
         model_output, analysis_answer, relevance_scores
     )
+    search_results.sort(key=lambda x: x["similarity_score"], reverse=True)
     verdict = 1
     verdict_in_words = "genuine"
     if credibility < 0.75:
         verdict = 0
         verdict_in_words = "fake"
-    print(verdict, llm_ans)
     if verdict ^ llm_ans:
         analysis = lcs.contradiction(news_content, verdict_in_words)
     final_result = {
