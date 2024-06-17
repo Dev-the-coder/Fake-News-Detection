@@ -3,8 +3,8 @@ import loader  from '../../../public/loading-gif.gif'
 import Image from 'next/image'
 const Loader = () => {
   return (
-    <div className="flex justify-center intem-center">
-        <Image src={loader} alt="Loading..." width={100} height={100} />
+    <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <Image src={loader} alt="Loading..." width={50} height={50} />
     </div>
   )
 }
