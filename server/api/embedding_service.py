@@ -21,4 +21,5 @@ class Embedder:
         with open("news_classifier.pkl", "rb") as model_file:
             model = pickle.load(model_file)
         embedding = self.generate_embedding(news_content)
-        return model.predict_proba(embedding)[0, 0] - 0.8
+        value = model.predict_proba(embedding)[0, 0] - 0.8
+        return value if value > 0 else 0
