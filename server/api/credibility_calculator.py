@@ -1,4 +1,5 @@
 import re
+import numpy as np
 
 
 def get_llm_ans(analysis):
@@ -27,9 +28,11 @@ def calculate_credibility(classifier_result, analysis_answer, relevance_scores):
         weights[1] = 0
         relevance_answer = 0
     else:
-        relevance_answer = sum(
-            [(l - i + 1) * x for i, x in enumerate(relevance_scores)]
-        ) / sum(list(range(1, l + 1)))
+        relevance_answer = (
+            (1 - np.exp(-l))
+            * sum([(l - i + 1) * x for i, x in enumerate(relevance_scores)])
+            / sum(list(range(1, l + 1)))
+        )
     return (
         (
             weights[0] * analysis_answer
