@@ -19,12 +19,22 @@ def verify_news():
     search_results = gss.search_google(news_content)
     relevance_scores = [x["similarity_score"] for x in search_results]
     model_output = embedder.check_news(news_content)
-    credibility = calculate_credibility(model_output, analysis, relevance_scores)
+    credibility, llm_ans, _, _ = calculate_credibility(
+        model_output, analysis, relevance_scores
+    )
+    verdict = 1
+    verdict_in_words = "genuine"
+    if credibility < 0.75:
+        verdict = 0
+        verdict_in_words = "fake"
+    print(verdict, llm_ans)
+    if verdict ^ llm_ans:
+        analysis = lcs.contradiction(news_content, verdict_in_words)
     final_result = {
         "analysis": analysis,
         "search_results": search_results,
         "credibility": credibility * 100,
-        "verdict": "fake" if credibility < 0.75 else "genuine",
+        "verdict": verdict_in_words,
     }
     return jsonify(final_result)
 
