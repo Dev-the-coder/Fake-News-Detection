@@ -24,15 +24,16 @@ class GoogleSearchService:
         lcs = LlamaConnectService()
         article_summarised = lcs.summarise_article(news_content)
         search_query = self.extract_query(article_summarised)
+        print(search_query)
         params = {
             "q": search_query,
             "engine": "google",
-            "tbm": "nws",
             "tbs": self.generate_datestring(),
             "api_key": self.serpapi_key,
         }
         search = GoogleSearch(params)
         results = search.get_dict().get("organic_results", [])
+        print(results)
         return self.process_search_results(search_query, results)
 
     def extract_query(self, article_summarised):

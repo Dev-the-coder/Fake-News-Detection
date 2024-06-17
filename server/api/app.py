@@ -1,6 +1,6 @@
 from llama_connect_service import LlamaConnectService
 from google_search_service import GoogleSearchService
-from credibility_calculator import calculate_credibility
+from credibility_calculator import calculate_credibility, get_llm_ans
 from embedding_service import Embedder
 from flask import Flask, request, jsonify  # type: ignore
 from flask_cors import CORS  # type: ignore
@@ -13,14 +13,22 @@ CORS(app)
 def verify_news():
     news_content = request.json.get("news")
     lcs = LlamaConnectService()
+    analysis = lcs.analyse_tone(news_content)
+    analysis_answer = get_llm_ans(analysis)
+    if analysis_answer is None or analysis_answer == -1:
+        return {
+            "analysis": analysis,
+            "search_results": [],
+            "credibility": -1000,
+            "verdict": "not news",
+        }
     gss = GoogleSearchService()
     embedder = Embedder()
-    analysis = lcs.analyse_tone(news_content)
     search_results = gss.search_google(news_content)
     relevance_scores = [x["similarity_score"] for x in search_results]
     model_output = embedder.check_news(news_content)
     credibility, llm_ans, _, _ = calculate_credibility(
-        model_output, analysis, relevance_scores
+        model_output, analysis_answer, relevance_scores
     )
     verdict = 1
     verdict_in_words = "genuine"

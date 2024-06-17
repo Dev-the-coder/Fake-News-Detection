@@ -1,21 +1,27 @@
 import re
 
 
-def calculate_credibility(classifier_result, analysis, relevance_scores):
-    analysis_answer = re.findall(r"\*\*(\d)\*\*", analysis)
-    weights = [0.36, 0.52, 0.12]
+def get_llm_ans(analysis):
+    analysis_answer = re.findall(r"\*\*[+-]?(\d)\*\*", analysis)
     if not len(analysis_answer):
         analysis_answer = re.findall("fake", analysis)
         if not len(analysis_answer):
             analysis_answer = re.findall("genuine", analysis)
             if not len(analysis_answer):
-                weights[0] = 0
+                return
             else:
                 analysis_answer = 1
         else:
             analysis_answer = 0
     else:
         analysis_answer = int(analysis_answer[0])
+    return analysis_answer
+
+
+def calculate_credibility(classifier_result, analysis_answer, relevance_scores):
+    weights = [0.45, 0.45, 0.1]
+    if analysis_answer is None:
+        weights[0] = 0
     l = len(relevance_scores)
     if not l:
         weights[1] = 0

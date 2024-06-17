@@ -18,7 +18,8 @@ class LlamaConnectService:
                     "content": f"""
                     This is a news:
                     {news_content}
-                    Based on the tone of the news, does it sound fake? Analyse in points. 
+                    If this is not actually a news and some random general statement, or a mathematical expression or someone expressing a feeling, say -1
+                    Otherwise, i.e., if it is a news, then based on the tone of the news, does it sound fake? Analyse in points. 
                     After analysing, say 1 at the end if it seems to be genuine, else 0
                     """,
                 }
