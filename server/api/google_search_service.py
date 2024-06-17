@@ -48,10 +48,10 @@ class GoogleSearchService:
                         "content_source": result.get("source"),
                         "verdict": (
                             "likely related"
-                            if similarity_score > 0.65
+                            if similarity_score >= 0.6
                             else "likely unrelated"
                         ),
                     }
                 )
-
+        relevance_scores.sort(key=lambda x: x["similarity_score"], reverse=True)
         return relevance_scores
