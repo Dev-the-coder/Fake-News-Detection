@@ -25,7 +25,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+    <div className="flex flex-col min-h-screen bg-gray-800 text-white">
       <header className="bg-blue-800 fixed top-0 left-0 right-0 text-white py-6 shadow-lg pl-20 font-sf z-50">
         <h1 className="text-3xl font-extrabold">Fake News Detector</h1>
       </header>

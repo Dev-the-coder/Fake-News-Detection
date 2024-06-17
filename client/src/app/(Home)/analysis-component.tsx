@@ -3,6 +3,7 @@ import Modal from "./modal";
 import { Tooltip } from 'react-tooltip';
 
 const AnalysisComponent = ({ news }: { news: any }) => {
+    let isGenuine:boolean= (news.verdict==="genuine") ;
     const [showLinksModal, setShowLinksModal] = useState(false);
     const formatTextToHTML = (text: string) => {
         let htmlText = text.replace(/\n/g, "<br/>");
@@ -11,7 +12,7 @@ const AnalysisComponent = ({ news }: { news: any }) => {
         htmlText = `<ul>${htmlText}</ul>`;
         return htmlText;
     };
-    const bgColor = 'bg-red-500' ;
+    
     return (
         <div className="relative flex flex-col items-end p-4 m-2 rounded-xl w-full gap-20">
             <div className="flex flex-col items-start p-4 mb-4 bg-gray-600 rounded-lg cursor-pointer w-1/2">
@@ -22,10 +23,10 @@ const AnalysisComponent = ({ news }: { news: any }) => {
                     className="p-4 mb-4 bg-gray-700 rounded-lg cursor-pointer w-1/2 float-left"
                     onClick={() => setShowLinksModal(true)}
                 >
-                    <div className="mb-2 text-right font-extrabold text-green-300">{news.verdict}</div>
+                    <div className={`mb-2 text-right font-extrabold ${isGenuine ? 'text-green-500' : 'text-red-500'}`}>{news.verdict}</div>
                     <div className="text-white" dangerouslySetInnerHTML={{ __html: formatTextToHTML(news.analysis) }}/>
                 </div>
-                <div className="ml-1 flex items-center justify-center w-12 h-12 text-white rounded-full font-bold cursor-pointer  ${bgColor}" data-tooltip-id="credibility-tooltip">
+                <div className={`ml-1 flex items-center justify-center w-12 h-12 text-white rounded-full font-bold cursor-pointer  ${isGenuine ? 'bg-green-500' : 'bg-red-500'}`} data-tooltip-id="credibility-tooltip">
                     {Math.round(news.credibility)}
                 </div>
                 <Tooltip id="credibility-tooltip" content="Article credibility score" />
