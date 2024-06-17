@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 interface Source {
     link: string;
@@ -17,14 +18,14 @@ const ModalComponent: React.FC<SourceListItemProps> = ({ source }) => {
     return (
         <div className="mb-4">
             <div className="flex justify-between">
-                <a
+                <Link
                         href={source.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-400 hover:underline"
                     >
                         {source.title}
-                    </a>
+                    </Link>
                     <div className="text-white text-lg text-gray900">{source.verdict}</div>
             </div>
             <div className="text-gray-300">
