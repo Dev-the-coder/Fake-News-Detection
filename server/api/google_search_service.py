@@ -24,7 +24,6 @@ class GoogleSearchService:
         lcs = LlamaConnectService()
         article_summarised = lcs.summarise_article(news_content)
         search_query = self.extract_query(article_summarised)
-        print(search_query)
         params = {
             "q": search_query,
             "engine": "google",
@@ -33,7 +32,6 @@ class GoogleSearchService:
         }
         search = GoogleSearch(params)
         results = search.get_dict().get("organic_results", [])
-        print(results)
         return self.process_search_results(search_query, results)
 
     def extract_query(self, article_summarised):
@@ -64,5 +62,4 @@ class GoogleSearchService:
                         ),
                     }
                 )
-        relevance_scores.sort(key=lambda x: x["similarity_score"], reverse=True)
         return relevance_scores
