@@ -33,9 +33,10 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, relevantSources }) => {
                 </div>
                 <div className="overflow-y-auto max-h-60 p-6 pt-0">
                     <div className="space-y-4 text-white">
-                        {relevantSources.map((source, index) => (
+                        
+                        {relevantSources.length>0 ? relevantSources.map((source, index) => (
                             <ModalComponent key={index} source={source} />
-                        ))}
+                        )) : <h1 className="flex item-center justify-center text-2xl font-semibold mt-2 text-gray-500">No Results Found</h1>}
                     </div>
                 </div>
             </div>
