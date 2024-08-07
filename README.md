@@ -35,5 +35,9 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Process of Fake News Detection using LLAMA LLM
+![Is it a news (1)](https://github.com/user-attachments/assets/8df9efec-eca0-481e-aa69-dde2fa052d38)
+
+
 
 
